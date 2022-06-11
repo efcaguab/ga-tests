@@ -5,7 +5,7 @@ on:
       testInput: 
         description: "Test input"
         required: true
-        default: "defaulTestInput"
+        default: "default"
 
 jobs:
   push-job:
@@ -18,18 +18,22 @@ jobs:
   dispatch-job:
     runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'workflow_dispatch' }}
+    outputs:
+      h3_resolution: ${{ steps.step1.outputs.h3_resolution }}
     steps:
-      - run: |
+      - id: step1
+        run: |
           echo "This is the dispatch job"
           echo "${{ inputs.testInput }} direct"
           echo "$TEST_INPUT through env"
+          if [ $TEST_INPUT = "default" ]; then echo '::set-output name=test::"3 4"'; else echo'::set-output name=test::"3 4 5"'; fi
         env: 
           TEST_INPUT: ${{ inputs.testInput }}
-
+      
   dependent-job:
     runs-on: ubuntu-22.04
-    needs: [push-job, dispatch-job]
+    needs: [dispatch-job]
     steps:
       - run: |
           echo "This is the dependent job"
-          
+          echo "The output resolution is ${{ needs.dispatch-job.outputs.h3_resolution }}"
