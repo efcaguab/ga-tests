@@ -26,7 +26,7 @@ jobs:
           echo "This is the dispatch job"
           echo "${{ inputs.testInput }} direct"
           echo "$TEST_INPUT through env"
-          if [ $TEST_INPUT = "default" ]; then echo '::set-output name=test::"3 4"'; else echo'::set-output name=test::"3 4 5"'; fi
+          if [ $TEST_INPUT = "default" ]; then echo '::set-output name=test::"3 4"'; else echo '::set-output name=test::"3 4 5"'; fi
         env: 
           TEST_INPUT: ${{ inputs.testInput }}
       
