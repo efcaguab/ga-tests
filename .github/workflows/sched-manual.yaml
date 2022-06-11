@@ -7,7 +7,6 @@ on:
         required: true
         default: "defaulTestInput"
 
-
 jobs:
   push-job:
     runs-on: ubuntu-22.04
@@ -26,3 +25,11 @@ jobs:
           echo "$TEST_INPUT through env"
         env: 
           TEST_INPUT: ${{ inputs.testInput }}
+
+  dependent-job:
+    runs-on: ubuntu-22.04
+    needs: [push-job, dispatch-job]
+    steps:
+      - run: |
+          echo "This is the dependent job"
+          
