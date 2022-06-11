@@ -1,0 +1,25 @@
+on:
+  workflow_dispatch:
+    inputs: 
+      testInput: 
+        description: "Test input"
+        required: true
+        default: "defaulTestInput"
+
+
+jobs:
+  push-job:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: |
+          echo "This is the push job"
+  
+  dispatch-job:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: |
+          echo "This is the dispatch job"
+          echo "${{ inputs.testInput }} direct"
+          echo "$TEST_INPUT through env"
+        env: 
+          TEST_INPUT: ${{ inputs.testInput }}
