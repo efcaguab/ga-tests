@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'workflow_dispatch' }}
     outputs:
-      h3_resolution: ${{ steps.step1.outputs.h3_resolution }}
+      h3_resolution: ${{ steps.step1.outputs.test }}
     steps:
       - id: step1
         run: |
